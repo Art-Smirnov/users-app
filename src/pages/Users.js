@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
-import { Button, Container, Stack } from 'react-bootstrap';
+import { Button, Container, InputGroup, Stack, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import useSortedItems from '../hooks/useSortedItems';
+import useDebounce from '../hooks/useDebounce';
 
 const Users = () => {
   const navigate = useNavigate();
 
-  // const [sortOrder, setSortOrder] = useState('asc');
   const [users, setUsers] = useState([]);
-
   const { sortedItems, toggleSortOrder, currentSortOrder } = useSortedItems(
     users,
     'asc',
   );
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  // const handleSortToggle = () => {
-  //   setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-  // };
-  //
-  // const sortedUsers = users.sort((a, b) => {
-  //   const nameA = a.username.toLowerCase();
-  //   const nameB = b.username.toLowerCase();
-  //
-  //   if (sortOrder === 'asc') {
-  //     return nameA.localeCompare(nameB);
-  //   } else {
-  //     return nameB.localeCompare(nameA);
-  //   }
-  // });
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredUsers = sortedItems.filter((user) =>
+    user.username.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
+  );
 
   useEffect(() => {
     $.get('https://jsonplaceholder.typicode.com/users')
@@ -54,8 +48,20 @@ const Users = () => {
         Toggle Sort Order:{' '}
         {currentSortOrder === 'asc' ? 'Ascending' : 'Descending'}
       </Button>
+      <div className="col-md-6">
+        <InputGroup size="lg" className="mb-5">
+          <Form.Control
+            type="text"
+            placeholder="Search by username"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            aria-label="Search by username"
+            aria-describedby="basic-addon1"
+          />
+        </InputGroup>
+      </div>
       <Stack gap={3}>
-        {sortedItems.map((user) => (
+        {filteredUsers.map((user) => (
           <div
             key={user.id}
             className="shadow p-4 d-flex flex-column flex-sm-row
