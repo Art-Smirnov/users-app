@@ -1,22 +1,28 @@
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import $ from 'jquery';
 import { Helmet } from 'react-helmet-async';
+import { useFetchPosts } from '../hooks/api/dataFetchHooks';
+import React from 'react';
 
 const UsersPosts = () => {
   const { userId } = useParams();
-  const [posts, setPosts] = useState([]);
+  const { posts, postsError, isPostsLoading } = useFetchPosts(userId);
 
-  useEffect(() => {
-    $.get(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
-      .done((data) => {
-        setPosts(data);
-      })
-      .fail(() => {
-        console.error('Failed to fetch');
-      });
-  }, [userId]);
+  if (postsError) {
+    return (
+      <h1 className="d-flex justify-content-center align-items-center vh-100">
+        {postsError}
+      </h1>
+    );
+  }
+
+  if (isPostsLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" />
+      </div>
+    );
+  }
 
   return (
     <>

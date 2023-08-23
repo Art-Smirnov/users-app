@@ -6,7 +6,7 @@ import { useFetchUsers } from '../hooks/api/dataFetchHooks';
 import UsersList from '../components/UsersList';
 
 const Users = () => {
-  const { users, usersError, usersLoading } = useFetchUsers();
+  const { users, usersError, isUsersLoading } = useFetchUsers();
   const { sortedItems, toggleSortOrder, currentSortOrder } = useSortedItems(
     users,
     'asc',
@@ -41,7 +41,7 @@ const Users = () => {
         </InputGroup>
       </div>
       <UsersList
-        isLoading={usersLoading}
+        isLoading={isUsersLoading}
         usersError={usersError}
         users={filteredUsers}
       />
