@@ -61,27 +61,34 @@ const Users = () => {
         </InputGroup>
       </div>
       <Stack gap={3}>
-        {filteredUsers.map((user) => (
-          <div
-            key={user.id}
-            className="shadow p-4 d-flex flex-column flex-sm-row
+        {filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <div
+              key={user.id}
+              className="shadow p-4 d-flex flex-column flex-sm-row
               justify-content-between align-items-center"
-          >
-            <div className="mb-4 mb-sm-0">{user.username}</div>
-            <div>
-              <Button
-                onClick={() => handleGoToPosts(user.id)}
-                variant="dark"
-                className="me-2"
-              >
-                Posts
-              </Button>
-              <Button onClick={() => handleGoToAlbums(user.id)} variant="dark">
-                Albums
-              </Button>
+            >
+              <div className="mb-4 mb-sm-0">{user.username}</div>
+              <div>
+                <Button
+                  onClick={() => handleGoToPosts(user.id)}
+                  variant="dark"
+                  className="me-2"
+                >
+                  Posts
+                </Button>
+                <Button
+                  onClick={() => handleGoToAlbums(user.id)}
+                  variant="dark"
+                >
+                  Albums
+                </Button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <h1>No Users..</h1>
+        )}
       </Stack>
     </Container>
   );
