@@ -44,3 +44,24 @@ export function useFetchPosts(userId) {
 
   return { posts, postsError, isPostsLoading };
 }
+
+export function useFetchAlbums(userId) {
+  const [albums, setAlbums] = useState([]);
+  const [albumsError, setAlbumsError] = useState('');
+  const [isAlbumsLoading, setIsAlbumsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsAlbumsLoading(true);
+    $.get(`${FETCH_URL}albums?userId=${userId}`)
+      .done((data) => {
+        setAlbums(data);
+        setIsAlbumsLoading(false);
+      })
+      .fail(() => {
+        setAlbumsError('Failed to fetch Albums');
+        setIsAlbumsLoading(false);
+      });
+  }, [userId]);
+
+  return { albums, albumsError, isAlbumsLoading };
+}

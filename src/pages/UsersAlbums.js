@@ -1,22 +1,28 @@
-import { Card, Container, Row } from 'react-bootstrap';
+import { Card, Container, Row, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import $ from 'jquery';
 import { Helmet } from 'react-helmet-async';
+import { useFetchAlbums } from '../hooks/api/dataFetchHooks';
+import React from 'react';
 
 const UsersAlbums = () => {
   const { userId } = useParams();
-  const [albums, setAlbums] = useState([]);
+  const { albums, albumsError, isAlbumsLoading } = useFetchAlbums(userId);
 
-  useEffect(() => {
-    $.get(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
-      .done((data) => {
-        setAlbums(data);
-      })
-      .fail(() => {
-        console.error('Failed to fetch');
-      });
-  }, [userId]);
+  if (albumsError) {
+    return (
+      <h1 className="d-flex justify-content-center align-items-center vh-100">
+        {albumsError}
+      </h1>
+    );
+  }
+
+  if (isAlbumsLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" />
+      </div>
+    );
+  }
 
   return (
     <>
