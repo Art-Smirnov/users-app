@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Spinner, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 const UsersList = ({ users, usersError, isLoading }) => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const UsersList = ({ users, usersError, isLoading }) => {
   };
 
   if (usersError) {
-    return <h1>{usersError}</h1>;
+    return <h1 className="text-danger">{usersError}</h1>;
   }
 
   if (isLoading) {
@@ -25,7 +25,7 @@ const UsersList = ({ users, usersError, isLoading }) => {
     );
   }
 
-  if (users.length < 0) {
+  if (users.length === 0) {
     return <h1>No Users..</h1>;
   }
 
@@ -37,7 +37,10 @@ const UsersList = ({ users, usersError, isLoading }) => {
           className="shadow p-4 d-flex flex-column flex-sm-row
               justify-content-between align-items-center"
         >
-          <div className="mb-4 mb-sm-0">{user.username}</div>
+          <div className="mb-4 mb-sm-0">
+            <div className="fw-bold fs-5">{user.username}</div>
+            <div>({user.name})</div>
+          </div>
           <div>
             <Button
               onClick={() => handleGoToPosts(user.id)}

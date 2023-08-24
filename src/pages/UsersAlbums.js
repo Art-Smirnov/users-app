@@ -1,8 +1,9 @@
-import { Card, Container, Row, Spinner } from 'react-bootstrap';
+import { Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useFetchAlbums } from '../hooks/api/dataFetchHooks';
 import React from 'react';
+import Meta from '../components/Meta';
+import ReturnButton from '../components/ReturnButton';
 
 const UsersAlbums = () => {
   const { userId } = useParams();
@@ -10,7 +11,7 @@ const UsersAlbums = () => {
 
   if (albumsError) {
     return (
-      <h1 className="d-flex justify-content-center align-items-center vh-100">
+      <h1 className="text-danger d-flex justify-content-center align-items-center vh-100">
         {albumsError}
       </h1>
     );
@@ -26,23 +27,24 @@ const UsersAlbums = () => {
 
   return (
     <>
-      <Helmet>
-        <title>User&#39;s Albums</title>
-        <meta name="description" content="View albums of selected user" />
-        <meta name="keywords" content="albums" />
-      </Helmet>
+      <Meta
+        title="User&#39;s Albums"
+        description="View albums of selected user"
+        keywords="albums"
+      />
 
       <Container className="py-5">
-        <Row xs={1} md={2} lg={3} xl={4} className="g-3">
-          {albums.map(({ id, title }) => {
-            return (
-              <Card key={id} className="shadow">
+        <ReturnButton />
+        <Row xs={1} md={2} lg={3} xl={4} xxl={5} className="g-3">
+          {albums.map(({ id, title }) => (
+            <Col key={id}>
+              <Card className="h-100 shadow scaling-card">
                 <Card.Body>
                   <Card.Title>{title}</Card.Title>
                 </Card.Body>
               </Card>
-            );
-          })}
+            </Col>
+          ))}
         </Row>
       </Container>
     </>

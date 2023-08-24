@@ -1,8 +1,9 @@
 import { Card, Container, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useFetchPosts } from '../hooks/api/dataFetchHooks';
 import React from 'react';
+import Meta from '../components/Meta';
+import ReturnButton from '../components/ReturnButton';
 
 const UsersPosts = () => {
   const { userId } = useParams();
@@ -10,7 +11,7 @@ const UsersPosts = () => {
 
   if (postsError) {
     return (
-      <h1 className="d-flex justify-content-center align-items-center vh-100">
+      <h1 className="text-danger d-flex justify-content-center align-items-center vh-100">
         {postsError}
       </h1>
     );
@@ -26,13 +27,14 @@ const UsersPosts = () => {
 
   return (
     <>
-      <Helmet>
-        <title>User&#39;s Posts</title>
-        <meta name="description" content="View posts of selected user" />
-        <meta name="keywords" content="posts" />
-      </Helmet>
+      <Meta
+        title="User&#39;s Posts"
+        description="View posts of selected user"
+        keywords="posts"
+      />
 
       <Container className="py-5">
+        <ReturnButton />
         {posts.map(({ id, title, body }) => {
           return (
             <Card key={id} className="mb-3 shadow">

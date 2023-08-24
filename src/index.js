@@ -4,9 +4,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import UsersPosts from './pages/UsersPosts';
 import Users from './pages/Users';
 import UsersAlbums from './pages/UsersAlbums';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { HelmetProvider } from 'react-helmet-async';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 const router = createBrowserRouter([
   {

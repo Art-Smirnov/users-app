@@ -12,15 +12,15 @@ const Users = () => {
     'asc',
   );
   const [searchTerm, setSearchTerm] = useState('');
+
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const filteredUsers = sortedItems.filter((user) =>
+    user.username.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
+  );
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
-  const filteredUsers = sortedItems.filter((user) =>
-    user.username.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
-  );
 
   return (
     <Container className="py-5">

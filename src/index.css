@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.scaling-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.scaling-card:hover {
+  transform: scale(1.02);
+}
