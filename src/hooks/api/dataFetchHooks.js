@@ -3,65 +3,35 @@ import $ from 'jquery';
 
 const FETCH_URL = 'https://jsonplaceholder.typicode.com/';
 
-export function useFetchUsers() {
-  const [users, setUsers] = useState([]);
-  const [usersError, setUsersError] = useState('');
-  const [isUsersLoading, setIsUsersLoading] = useState(true);
+function useFetch(resourceType, userId) {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsUsersLoading(true);
-    $.get(`${FETCH_URL}users`)
-      .done((data) => {
-        setUsers(data);
-        setIsUsersLoading(false);
+    setIsLoading(true);
+    $.get(`${FETCH_URL}${resourceType}${userId ? `?userId=${userId}` : ''}`)
+      .done((response) => {
+        setData(response);
+        setIsLoading(false);
       })
       .fail(() => {
-        setUsersError('Failed to fetch Users');
-        setIsUsersLoading(false);
+        setError(`Failed to fetch ${resourceType}`);
+        setIsLoading(false);
       });
-  }, []);
+  }, [resourceType, userId]);
 
-  return { users, usersError, isUsersLoading };
+  return { data, error, isLoading };
+}
+
+export function useFetchUsers() {
+  return useFetch('users');
 }
 
 export function useFetchPosts(userId) {
-  const [posts, setPosts] = useState([]);
-  const [postsError, setPostsError] = useState('');
-  const [isPostsLoading, setIsPostsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsPostsLoading(true);
-    $.get(`${FETCH_URL}posts?userId=${userId}`)
-      .done((data) => {
-        setPosts(data);
-        setIsPostsLoading(false);
-      })
-      .fail(() => {
-        setPostsError('Failed to fetch Posts');
-        setIsPostsLoading(false);
-      });
-  }, [userId]);
-
-  return { posts, postsError, isPostsLoading };
+  return useFetch('posts', userId);
 }
 
 export function useFetchAlbums(userId) {
-  const [albums, setAlbums] = useState([]);
-  const [albumsError, setAlbumsError] = useState('');
-  const [isAlbumsLoading, setIsAlbumsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsAlbumsLoading(true);
-    $.get(`${FETCH_URL}albums?userId=${userId}`)
-      .done((data) => {
-        setAlbums(data);
-        setIsAlbumsLoading(false);
-      })
-      .fail(() => {
-        setAlbumsError('Failed to fetch Albums');
-        setIsAlbumsLoading(false);
-      });
-  }, [userId]);
-
-  return { albums, albumsError, isAlbumsLoading };
+  return useFetch('albums', userId);
 }

@@ -7,17 +7,17 @@ import ReturnButton from '../components/ReturnButton';
 
 const UsersPosts = () => {
   const { userId } = useParams();
-  const { posts, postsError, isPostsLoading } = useFetchPosts(userId);
+  const { data, error, isLoading } = useFetchPosts(userId);
 
-  if (postsError) {
+  if (error) {
     return (
       <h1 className="text-danger d-flex justify-content-center align-items-center vh-100">
-        {postsError}
+        {error}
       </h1>
     );
   }
 
-  if (isPostsLoading) {
+  if (isLoading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
         <Spinner animation="border" />
@@ -35,7 +35,7 @@ const UsersPosts = () => {
 
       <Container className="py-5">
         <ReturnButton />
-        {posts.map(({ id, title, body }) => {
+        {data.map(({ id, title, body }) => {
           return (
             <Card key={id} className="mb-3 shadow">
               <Card.Body>

@@ -7,17 +7,17 @@ import ReturnButton from '../components/ReturnButton';
 
 const UsersAlbums = () => {
   const { userId } = useParams();
-  const { albums, albumsError, isAlbumsLoading } = useFetchAlbums(userId);
+  const { data, error, isLoading } = useFetchAlbums(userId);
 
-  if (albumsError) {
+  if (error) {
     return (
       <h1 className="text-danger d-flex justify-content-center align-items-center vh-100">
-        {albumsError}
+        {error}
       </h1>
     );
   }
 
-  if (isAlbumsLoading) {
+  if (isLoading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
         <Spinner animation="border" />
@@ -36,7 +36,7 @@ const UsersAlbums = () => {
       <Container className="py-5">
         <ReturnButton />
         <Row xs={1} md={2} lg={3} xl={4} xxl={5} className="g-3">
-          {albums.map(({ id, title }) => (
+          {data.map(({ id, title }) => (
             <Col key={id}>
               <Card className="h-100 shadow scaling-card">
                 <Card.Body>

@@ -6,7 +6,7 @@ const ReturnButton = () => {
   const navigate = useNavigate();
 
   const handleReturnClick = () => {
-    navigate(-1);
+    navigate('/');
   };
 
   return (
