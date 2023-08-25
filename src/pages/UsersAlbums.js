@@ -1,7 +1,6 @@
 import { Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useFetchAlbums } from '../hooks/api/dataFetchHooks';
-import React from 'react';
 import Meta from '../components/Meta';
 import ReturnButton from '../components/ReturnButton';
 
