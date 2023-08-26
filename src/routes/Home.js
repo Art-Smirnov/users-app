@@ -5,7 +5,7 @@ import useDebounce from '../hooks/useDebounce';
 import { useFetchUsers } from '../hooks/api/dataFetchHooks';
 import UsersList from '../components/UsersList';
 
-const Users = () => {
+const Home = () => {
   const { data, error, isLoading } = useFetchUsers();
   const { sortedItems, toggleSortOrder, currentSortOrder } = useSortedItems(
     data,
@@ -49,4 +49,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Home;
